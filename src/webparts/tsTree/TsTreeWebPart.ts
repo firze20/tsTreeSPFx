@@ -22,6 +22,7 @@ export interface ITsTreeWebPartProps {
   description: string;
   context: WebPartContext;
   rootFolder: IFolder;
+  selectedFolder: IFolder;
 }
 
 export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartProps> {
@@ -30,6 +31,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
 
 
   protected async onInit(): Promise<void> {
+    //Starting the folder service object as soon as the webpart gets loaded
     this.folderService = new FolderService(this.context);
     this.properties.rootFolder = await this.folderService.getRootFolder();
     return super.onInit();
@@ -43,12 +45,9 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       </div>`;
   }
 
-  private _getEnvironmentMessage(): string {
-    if (!!this.context.sdks.microsoftTeams) { // running in Teams
-      return this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentTeams : strings.AppTeamsTabEnvironment;
-    }
-
-    return this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentSharePoint : strings.AppSharePointEnvironment;
+  //Working
+  private setSelectedFolder(folder: IFolder) {
+    console.log(folder.Name);
   }
 
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
@@ -86,14 +85,14 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                 PropertyFieldFolderPicker('documents', {
                     context: this.context,
                     label: 'Select a folder',
-                    onSelect: null,
+                    onSelect: this.setSelectedFolder,
                     rootFolder: this.properties.rootFolder,
                     selectedFolder: undefined,
                     onPropertyChange: function (propertyPath: string, oldValue: any, newValue: any): void {
                        console.log(propertyPath, oldValue, newValue);
                     },
                     properties: undefined,
-                    key: 'Documents'
+                    key: 'Document'
                 })
               ]
             }
