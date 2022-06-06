@@ -1,0 +1,16 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "version": "1.14.0",
+    "libraryName": "ts-tree",
+    "libraryId": "67447b07-d7b9-4523-afd5-6c47eca7a171",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "ts-tree",
+    "solutionShortDescription": "ts-tree description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}

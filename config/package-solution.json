@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "ts-tree-client-side-solution",
+    "id": "67447b07-d7b9-4523-afd5-6c47eca7a171",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.14.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "ts-tree description"
+      },
+      "longDescription": {
+        "default": "ts-tree description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "ts-tree Feature",
+        "description": "The feature that activates elements of the ts-tree solution.",
+        "id": "b1eb51a8-ee3b-4b5d-b94c-4f4f99b5dcc9",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/ts-tree.sppkg"
+  }
+}
