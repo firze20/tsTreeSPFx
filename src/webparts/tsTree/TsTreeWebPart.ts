@@ -41,7 +41,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
     this.domElement.innerHTML = `
       <div class="${styles.welcome}">
        <h2>JSTree</h2>
-       <p>Root Folder Name = ${this.properties.rootFolder.Name}</p>
+       <p>Pick a folder from the web part configuration properties.</p>
       </div>`;
   }
 
