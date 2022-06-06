@@ -26,13 +26,10 @@ export interface ITsTreeWebPartProps {
 
 export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartProps> {
 
-  private _isDarkTheme: boolean = false;
-  private _environmentMessage: string = '';
   private folderService: FolderService;
 
 
   protected async onInit(): Promise<void> {
-    this._environmentMessage = this._getEnvironmentMessage();
     this.folderService = new FolderService(this.context);
     this.properties.rootFolder = await this.folderService.getRootFolder();
     return super.onInit();
@@ -59,7 +56,6 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       return;
     }
 
-    this._isDarkTheme = !!currentTheme.isInverted;
     const {
       semanticColors
     } = currentTheme;
