@@ -21,7 +21,7 @@ import {FolderService} from '../services/folder.service';
 export interface ITsTreeWebPartProps {
   description: string;
   context: WebPartContext;
-  folder: IFolder;
+  rootFolder: IFolder;
 }
 
 export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartProps> {
@@ -31,38 +31,19 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
   private folderService: FolderService;
 
 
-  protected onInit(): Promise<void> {
+  protected async onInit(): Promise<void> {
     this._environmentMessage = this._getEnvironmentMessage();
     this.folderService = new FolderService(this.context);
+    this.properties.rootFolder = await this.folderService.getRootFolder();
     return super.onInit();
   }
 
   public render(): void {
     this.domElement.innerHTML = `
-    <section class="${styles.tsTree} ${!!this.context.sdks.microsoftTeams ? styles.teams : ''}">
       <div class="${styles.welcome}">
-        <img alt="" src="${this._isDarkTheme ? require('./assets/welcome-dark.png') : require('./assets/welcome-light.png')}" class="${styles.welcomeImage}" />
-        <h2>Well done, ${escape(this.context.pageContext.user.displayName)}!</h2>
-        <div>${this._environmentMessage}</div>
-        <div>Web part property value: <strong>${escape(this.properties.description)}</strong></div>
-      </div>
-      <div>
-        <h3>Welcome to SharePoint Framework!</h3>
-        <p>
-        The SharePoint Framework (SPFx) is a extensibility model for Microsoft Viva, Microsoft Teams and SharePoint. It's the easiest way to extend Microsoft 365 with automatic Single Sign On, automatic hosting and industry standard tooling.
-        </p>
-        <h4>Learn more about SPFx development:</h4>
-          <ul class="${styles.links}">
-            <li><a href="https://aka.ms/spfx" target="_blank">SharePoint Framework Overview</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-graph" target="_blank">Use Microsoft Graph in your solution</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-teams" target="_blank">Build for Microsoft Teams using SharePoint Framework</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-viva" target="_blank">Build for Microsoft Viva Connections using SharePoint Framework</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-store" target="_blank">Publish SharePoint Framework applications to the marketplace</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-api" target="_blank">SharePoint Framework API reference</a></li>
-            <li><a href="https://aka.ms/m365pnp" target="_blank">Microsoft 365 Developer Community</a></li>
-          </ul>
-      </div>
-    </section>`;
+       <h2>JSTree</h2>
+       <p>Root Folder Name = ${this.properties.rootFolder.Name}</p>
+      </div>`;
   }
 
   private _getEnvironmentMessage(): string {
@@ -110,7 +91,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                     context: this.context,
                     label: 'Select a folder',
                     onSelect: null,
-                    rootFolder: undefined,
+                    rootFolder: this.properties.rootFolder,
                     selectedFolder: undefined,
                     onPropertyChange: function (propertyPath: string, oldValue: any, newValue: any): void {
                        console.log(propertyPath, oldValue, newValue);
