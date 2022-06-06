@@ -46,8 +46,9 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
   }
 
   //Working
-  private setSelectedFolder(folder: IFolder) {
-    console.log(folder.Name);
+  private setSelectedFolder(folder: IFolder): void {
+    this.properties.selectedFolder = folder;
+    console.log(this.properties.selectedFolder.Name);
   }
 
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
@@ -85,9 +86,9 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                 PropertyFieldFolderPicker('documents', {
                     context: this.context,
                     label: 'Select a folder',
-                    onSelect: this.setSelectedFolder,
+                    onSelect: (folder) => this.setSelectedFolder(folder),
                     rootFolder: this.properties.rootFolder,
-                    selectedFolder: undefined,
+                    selectedFolder: this.properties.selectedFolder,
                     onPropertyChange: function (propertyPath: string, oldValue: any, newValue: any): void {
                        console.log(propertyPath, oldValue, newValue);
                     },
