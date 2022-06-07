@@ -22,7 +22,7 @@ export interface ITsTreeWebPartProps {
   description: string;
   context: WebPartContext;
   rootFolder: IFolder;
-  selectedFolder: IFolder;
+  selectedFolder: IFolder | undefined;
 }
 
 export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartProps> {
@@ -38,11 +38,24 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
   }
 
   public render(): void {
-    this.domElement.innerHTML = `
-      <div class="${styles.welcome}">
-       <h2>JSTree</h2>
-       <p>Pick a folder from the web part configuration properties.</p>
-      </div>`;
+
+    if(!this.properties.selectedFolder) {
+      this.domElement.innerHTML = `
+       <div class="${styles.welcome}">
+        <h2>JSTree</h2>
+        <p>Pick a folder from the web part configuration properties.</p>
+        </div>`;
+    }
+
+    else {
+      this.domElement.innerHTML = `
+        <div class="${styles.welcome}">
+          <h2>Document Selected</h2>
+          <p>${this.properties.selectedFolder.Name}</p>
+        </div>
+      `
+    }
+  
   }
 
   //Working
