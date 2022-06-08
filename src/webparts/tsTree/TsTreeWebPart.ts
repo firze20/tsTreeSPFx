@@ -1,6 +1,8 @@
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
+  PropertyPaneCheckbox,
+  PropertyPaneSlider,
   PropertyPaneTextField
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart, WebPartContext } from '@microsoft/sp-webpart-base';
@@ -26,6 +28,7 @@ export interface ITsTreeWebPartProps {
   rootFolder: IFolder;
   selectedFolder: IFolder | undefined;
   canCreate: boolean;
+  canEdit: boolean;
   canMove: boolean;
   canDelete: boolean;
   filesInfo: IFileInfo[] | undefined;
@@ -121,15 +124,12 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       pages: [
         {
           header: {
-            description: strings.PropertyPaneDescription
+            description: 'JS Tree Settings'
           },
           groups: [
             {
-              groupName: strings.BasicGroupName,
+              //groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
-                }),
                 PropertyFieldFolderPicker('documents', {
                     context: this.context,
                     label: 'Select a folder',
@@ -141,6 +141,22 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                     },
                     properties: undefined,
                     key: 'Document'
+                }),
+                PropertyPaneCheckbox('Can Create?', {
+                  text: 'Enable create folders?',
+                  checked: this.properties.canCreate
+                }),
+                PropertyPaneCheckbox('Can Edit?', {
+                  text: 'Enable edit folder name ?',
+                  checked: this.properties.canEdit
+                }),
+                PropertyPaneCheckbox('Can Move?', {
+                  text: 'Enable move folders?',
+                  checked: this.properties.canMove
+                }),
+                PropertyPaneCheckbox('Can Delete?', {
+                  text: 'Enable delete folders?',
+                  checked: this.properties.canDelete
                 })
               ]
             }
