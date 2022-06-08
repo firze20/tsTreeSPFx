@@ -11,6 +11,7 @@ import { IReadonlyTheme } from '@microsoft/sp-component-base';
 // PNP Controls
 import {IFolder, PropertyFieldFolderPicker} from '@pnp/spfx-property-controls';
 
+
 import styles from './TsTreeWebPart.module.scss';
 import * as strings from 'TsTreeWebPartStrings';
 
@@ -20,7 +21,7 @@ import 'jstree';
 //Service
 import {FolderService} from '../services/folder.service';
 import { IFileInfo } from '@pnp/sp/files/types';
-
+import { IFolderInfo } from "@pnp/sp/folders";
 
 export interface ITsTreeWebPartProps {
   description: string;
@@ -32,6 +33,7 @@ export interface ITsTreeWebPartProps {
   canMove: boolean;
   canDelete: boolean;
   filesInfo: IFileInfo[] | undefined;
+  foldersInfo: IFolderInfo[] | undefined;
 }
 
 export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartProps> {
@@ -91,13 +93,11 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
   private async setSelectedFolder(folder: IFolder): Promise<void> {
     this.properties.selectedFolder = folder;
     try {
-      const getFolderFields = await this.folderService.getFolderFiels(this.properties.selectedFolder.ServerRelativeUrl);
       const filesInfo = await this.folderService.getFilesInsideFolder(this.properties.selectedFolder.ServerRelativeUrl);
       this.properties.filesInfo = filesInfo;
       const childFolderInfo = await this.folderService.getChildFolders(this.properties.selectedFolder.ServerRelativeUrl);
-      console.log(childFolderInfo);
+      this.properties.foldersInfo = childFolderInfo;
       console.log(this.properties.filesInfo);
-      console.log(childFolderInfo);
     } catch (error) {
       console.log(error);
     }
