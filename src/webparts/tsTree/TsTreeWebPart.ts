@@ -56,7 +56,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
 
     else {
       this.domElement.innerHTML = `
-        <div class="${styles.welcome}">
+        <div class="${styles.divTree}">
           <div id='jstree'>
 
           </div>
