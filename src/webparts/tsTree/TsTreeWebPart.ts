@@ -6,10 +6,7 @@ import {
 import { BaseClientSideWebPart, WebPartContext } from '@microsoft/sp-webpart-base';
 import {SPComponentLoader} from '@microsoft/sp-loader';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
-import { escape } from '@microsoft/sp-lodash-subset';
-
 // PNP Controls
-
 import {IFolder, PropertyFieldFolderPicker} from '@pnp/spfx-property-controls';
 
 import styles from './TsTreeWebPart.module.scss';
