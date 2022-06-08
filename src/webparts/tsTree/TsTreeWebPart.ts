@@ -53,7 +53,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
     if(!this.properties.selectedFolder) {
       this.domElement.innerHTML = `
        <div class="${styles.welcome}">
-        <h2>JSTree</h2>
+        <h2>JSTree <img class="${styles.jstreeIcon}" src=${require('./assets/jstree.png')} /> </h2>
         <p>Pick a folder from the web part configuration properties.</p>
         </div>`;
     }
