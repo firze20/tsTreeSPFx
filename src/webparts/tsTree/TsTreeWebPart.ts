@@ -4,6 +4,7 @@ import {
   PropertyPaneTextField
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart, WebPartContext } from '@microsoft/sp-webpart-base';
+import {SPComponentLoader} from '@microsoft/sp-loader';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 import { escape } from '@microsoft/sp-lodash-subset';
 
@@ -14,9 +15,14 @@ import {IFolder, PropertyFieldFolderPicker} from '@pnp/spfx-property-controls';
 import styles from './TsTreeWebPart.module.scss';
 import * as strings from 'TsTreeWebPartStrings';
 
-//Service
+import $ from 'jquery';
+import 'jstree';
 
+//Service
 import {FolderService} from '../services/folder.service';
+
+import * as jQuery from 'jquery';
+
 
 export interface ITsTreeWebPartProps {
   description: string;
@@ -34,6 +40,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
     //Starting the folder service object as soon as the webpart gets loaded
     this.folderService = new FolderService(this.context);
     this.properties.rootFolder = await this.folderService.getRootFolder();
+    SPComponentLoader.loadCss('https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css');
     return super.onInit();
   }
 
