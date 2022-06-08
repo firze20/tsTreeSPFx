@@ -21,7 +21,6 @@ import 'jstree';
 //Service
 import {FolderService} from '../services/folder.service';
 
-import * as jQuery from 'jquery';
 
 export interface ITsTreeWebPartProps {
   description: string;
