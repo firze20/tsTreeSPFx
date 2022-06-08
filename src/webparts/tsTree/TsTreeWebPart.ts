@@ -82,7 +82,6 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
   //Working
   private setSelectedFolder(folder: IFolder): void {
     this.properties.selectedFolder = folder;
-    console.log(this.properties.selectedFolder.Name);
   }
 
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
