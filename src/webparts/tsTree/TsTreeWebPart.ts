@@ -23,7 +23,6 @@ import {FolderService} from '../services/folder.service';
 
 import * as jQuery from 'jquery';
 
-
 export interface ITsTreeWebPartProps {
   description: string;
   context: WebPartContext;
@@ -58,10 +57,28 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
     else {
       this.domElement.innerHTML = `
         <div class="${styles.welcome}">
-          <h2>Document Selected</h2>
-          <p>${this.properties.selectedFolder.Name}</p>
+          <div id='jstree'>
+
+          </div>
         </div>
-      `
+      `;
+
+      $('#jstree').jstree({ 'core' : {
+        'data' : [
+           'Simple root node',
+           {
+             'text' : 'Root node 2',
+             'state' : {
+               'opened' : true,
+               'selected' : true
+             },
+             'children' : [
+               { 'text' : 'Child 1' },
+               'Child 2'
+             ]
+          }
+        ]
+    } });
     }
   
   }
