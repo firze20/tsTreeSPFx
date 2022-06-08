@@ -17,6 +17,7 @@ import 'jstree';
 
 //Service
 import {FolderService} from '../services/folder.service';
+import { IFileInfo } from '@pnp/sp/files/types';
 
 
 export interface ITsTreeWebPartProps {
@@ -24,6 +25,10 @@ export interface ITsTreeWebPartProps {
   context: WebPartContext;
   rootFolder: IFolder;
   selectedFolder: IFolder | undefined;
+  canCreate: boolean;
+  canMove: boolean;
+  canDelete: boolean;
+  filesInfo: IFileInfo[] | undefined;
 }
 
 export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartProps> {
@@ -61,7 +66,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
 
       $('#jstree').jstree({ 'core' : {
         'data' : [
-           'Simple root node',
+           this.properties.selectedFolder.Name,
            {
              'text' : 'Root node 2',
              'state' : {
@@ -80,8 +85,17 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
   }
 
   //Working
-  private setSelectedFolder(folder: IFolder): void {
+  private async setSelectedFolder(folder: IFolder): Promise<void> {
     this.properties.selectedFolder = folder;
+    try {
+      const getFolderFields = await this.folderService.getFolderFiels(this.properties.selectedFolder.ServerRelativeUrl);
+      console.log(getFolderFields);
+      const filesInfo = await this.folderService.getFilesInsideFolder(this.properties.selectedFolder.ServerRelativeUrl);
+      this.properties.filesInfo = filesInfo;
+      console.log(this.properties.filesInfo);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
