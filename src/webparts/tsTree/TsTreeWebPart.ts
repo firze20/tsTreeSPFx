@@ -25,7 +25,6 @@ import { IFolderInfo } from "@pnp/sp/folders";
 
 export interface ITsTreeWebPartProps {
   description: string;
-  context: WebPartContext;
   rootFolder: IFolder;
   selectedFolder: IFolder | undefined;
   canCreate: boolean;
