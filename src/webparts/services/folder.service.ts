@@ -8,6 +8,7 @@ import "@pnp/sp/files/folder";
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { IFolder } from "@pnp/spfx-property-controls";
 import { IFileInfo } from "@pnp/sp/files/types";
+import { IFolderInfo } from "@pnp/sp/folders";
 
 //import { folderFromServerRelativePath } from "@pnp/sp/folders";
 
@@ -30,6 +31,13 @@ export class FolderService {
     public async getFolderFiels(folderPath: string): Promise<ISPInstance> {
         const itemFields: ISPInstance = await this.sp.web.getFolderByServerRelativePath(folderPath).listItemAllFields();
         return itemFields;
+    }
+
+    //get child folders
+
+    public async getChildFolders(folderPath: string): Promise<IFolderInfo[]> {
+        const childFolders = await this.sp.web.getFolderByServerRelativePath(folderPath).folders();
+        return childFolders;
     }
 
     //get files inside folder
