@@ -19,6 +19,10 @@ import {FolderService} from '../services/folder.service';
 import { IFileInfo } from '@pnp/sp/files/types';
 import { IFolderInfo } from "@pnp/sp/folders";
 
+//models
+
+import {INode} from '../../models';
+
 export interface ITsTreeWebPartProps {
   description: string;
   rootFolder: IFolder;
@@ -29,6 +33,7 @@ export interface ITsTreeWebPartProps {
   canDelete: boolean;
   filesInfo: IFileInfo[] | undefined;
   foldersInfo: IFolderInfo[] | undefined;
+  node: INode[] | undefined;
 }
 
 export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartProps> {
@@ -134,7 +139,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                     onSelect: (folder) => this.setSelectedFolder(folder),
                     rootFolder: this.properties.rootFolder,
                     selectedFolder: this.properties.selectedFolder,
-                    onPropertyChange: function (propertyPath: string, oldValue: any, newValue: any): void {
+                    onPropertyChange: (propertyPath: string, oldValue: any, newValue: any): void  => {
                        console.log(propertyPath, oldValue, newValue);
                     },
                     properties: undefined,
