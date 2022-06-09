@@ -21,7 +21,7 @@ import { IFolderInfo } from "@pnp/sp/folders";
 
 //models
 
-import {INode} from '../../models';
+import {INode, ITreeData} from '../../models';
 
 export interface ITsTreeWebPartProps {
   description: string;
@@ -34,6 +34,7 @@ export interface ITsTreeWebPartProps {
   filesInfo: IFileInfo[] | undefined;
   foldersInfo: IFolderInfo[] | undefined;
   node: INode[] | undefined;
+  tree: ITreeData[] | undefined;
 }
 
 export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartProps> {
