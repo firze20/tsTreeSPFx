@@ -125,7 +125,23 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
      this.properties.node = nodeFilesAndFolders;
 
      console.log(this.properties.node);
+
+     this.mappingTree();
    });
+  }
+
+  private mappingTree(): void {
+    const treeData: ITreeData[] = [];
+    this.properties.node.forEach(node => {
+      treeData.push({
+        text: node.Name,
+        state: {
+          disabled: false,
+          opened: true,
+          selected: false
+        }
+      });
+    });
   }
 
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
