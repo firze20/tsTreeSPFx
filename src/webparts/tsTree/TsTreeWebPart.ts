@@ -97,11 +97,34 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       this.properties.filesInfo = filesInfo;
       const childFolderInfo = await this.folderService.getChildFolders(this.properties.selectedFolder.ServerRelativeUrl);
       this.properties.foldersInfo = childFolderInfo;
-      console.log(this.properties.filesInfo);
-      console.log(this.properties.foldersInfo);
+      this.mappingFoldersAndFiles();
     } catch (error) {
       console.log(error);
     }
+  }
+
+  private mappingFoldersAndFiles(): void {
+    const nodeFilesAndFolders: INode[] = [];
+   //mapping folder 
+   this.properties.foldersInfo.forEach(folder => {
+     nodeFilesAndFolders.push({
+       Name: folder.Name,
+       type: 'folder'
+     });
+     //mapping files
+     this.properties.filesInfo.forEach(file => {
+       nodeFilesAndFolders.push({
+         Name: file.Name,
+         type: 'file'
+       });
+     });
+
+     console.log(nodeFilesAndFolders);
+
+     this.properties.node = nodeFilesAndFolders;
+
+     console.log(this.properties.node);
+   });
   }
 
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
