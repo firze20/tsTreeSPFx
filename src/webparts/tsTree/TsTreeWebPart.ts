@@ -110,12 +110,14 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
    this.properties.foldersInfo.forEach(folder => {
      nodeFilesAndFolders.push({
        Name: folder.Name,
+       id: folder.UniqueId,
        type: 'folder'
      });
      //mapping files
      this.properties.filesInfo.forEach(file => {
        nodeFilesAndFolders.push({
          Name: file.Name,
+         id: folder.UniqueId,
          type: 'file'
        });
      });
