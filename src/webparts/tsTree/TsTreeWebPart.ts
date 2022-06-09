@@ -71,7 +71,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       `;
 
       $('#jstree').jstree({ 'core' : {
-        'data' : this.properties.tree /*[
+        'data' : [
            this.properties.selectedFolder.Name,
            {
              'text' : 'Root node 2',
@@ -84,7 +84,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                'Child 2'
              ]
           }
-        ]*/
+        ]
     } });
     }
   
