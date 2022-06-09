@@ -28,6 +28,7 @@
     "@microsoft/sp-tslint-rules": "1.14.0",
     "@types/webpack-env": "1.13.1",
     "ajv": "~5.2.2",
-    "gulp": "~4.0.2"
+    "gulp": "~4.0.2",
+    "tslint-microsoft-contrib": "6.2.0"
   }
 }
