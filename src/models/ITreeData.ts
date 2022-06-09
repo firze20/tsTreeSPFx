@@ -1,10 +1,10 @@
 export interface ITreeData {
-    id?: string;
-    text: string;
-    icon?: string;
-    state: IState;
-    children?: string[] | object[];
-    plugins?: [
+    "id"?: string;
+    "text": string;
+    "icon"?: string;
+    "state": IState;
+    "children"?: string[] | object[];
+    "plugins"?: [
         "checkbox",
         "contextmenu",
 	    "dnd",
@@ -21,7 +21,7 @@ export interface ITreeData {
 }
 
 interface IState {
-    opened: boolean;
-    disabled: boolean;
-    selected: boolean;
+    "opened": boolean;
+    "disabled": boolean;
+    "selected": boolean;
 }
