@@ -52,6 +52,23 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
   }
 
   public render(): void {
+    
+    var arrayCollection = [
+      {"id": "animal", "parent": "#", "text": "Animals"},
+      {"id": "device", "parent": "#", "text": "Devices"},
+      {"id": "dog", "parent": "animal", "text": "Dogs"},
+      {"id": "lion", "parent": "animal", "text": "Lions"},
+      {"id": "mobile", "parent": "device", "text": "Mobile Phones"},
+      {"id": "lappy", "parent": "device", "text": "Laptops"},
+      {"id": "daburman", "parent": "dog", "text": "Dabur Man", "icon": "/"},
+      {"id": "Dalmation", "parent": "dog", "text": "Dalmatian", "icon": "/"},
+      {"id": "african", "parent": "lion", "text": "African Lion", "icon": "/"},
+      {"id": "indian", "parent": "lion", "text": "Indian Lion", "icon": "/"},
+      {"id": "apple", "parent": "mobile", "text": "Apple IPhone 6", "icon": "/"},
+      {"id": "samsung", "parent": "mobile", "text": "Samsung Note II", "icon": "/"},
+      {"id": "lenevo", "parent": "lappy", "text": "Lenevo", "icon": "/"},
+      {"id": "hp", "parent": "lappy", "text": "HP", "icon": "/"}
+  ];
 
     if(!this.properties.selectedFolder) {
       this.domElement.innerHTML = `
@@ -71,7 +88,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       `;
 
       $('#jstree').jstree({ 'core' : {
-        'data' : [
+        'data' : arrayCollection /*[
            this.properties.selectedFolder.Name,
            {
              'text' : 'Root node 2',
@@ -84,7 +101,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                'Child 2'
              ]
           }
-        ]
+        ]*/
     } });
     }
   
@@ -136,12 +153,12 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
     const treeData: ITreeData[] = [];
     this.properties.node.forEach(node => {
       treeData.push({
-        text: node.Name,
+        text: this.properties.selectedFolder.Name,
         state: {
           disabled: false,
           opened: true,
           selected: false
-        }
+        },
       });
     });
   }
