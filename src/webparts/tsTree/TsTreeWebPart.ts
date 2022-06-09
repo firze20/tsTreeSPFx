@@ -204,8 +204,9 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                     onSelect: (folder) => this.setSelectedFolder(folder),
                     rootFolder: this.properties.rootFolder,
                     selectedFolder: this.properties.selectedFolder,
-                    onPropertyChange: (propertyPath: string, oldValue: any, newValue: any): void  => {
-                       
+                    onPropertyChange: (propertyPath: string, oldValue: IFolder, newValue: IFolder): void  => {
+                       console.log(newValue);
+                       this.properties.selectedFolder = newValue;
                     },
                     properties: this.properties,
                     key: 'Document'
