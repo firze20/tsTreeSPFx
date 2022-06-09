@@ -97,6 +97,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       const childFolderInfo = await this.folderService.getChildFolders(this.properties.selectedFolder.ServerRelativeUrl);
       this.properties.foldersInfo = childFolderInfo;
       console.log(this.properties.filesInfo);
+      console.log(this.properties.foldersInfo);
     } catch (error) {
       console.log(error);
     }
