@@ -1,11 +1,8 @@
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneCheckbox,
-  PropertyPaneSlider,
-  PropertyPaneTextField
-} from '@microsoft/sp-property-pane';
-import { BaseClientSideWebPart, WebPartContext } from '@microsoft/sp-webpart-base';
+  PropertyPaneCheckbox} from '@microsoft/sp-property-pane';
+import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import {SPComponentLoader} from '@microsoft/sp-loader';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 // PNP Controls
@@ -13,7 +10,6 @@ import {IFolder, PropertyFieldFolderPicker} from '@pnp/spfx-property-controls';
 
 
 import styles from './TsTreeWebPart.module.scss';
-import * as strings from 'TsTreeWebPartStrings';
 
 import $ from 'jquery';
 import 'jstree';
