@@ -158,6 +158,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       text: this.properties.selectedFolder.Name
     });
     this.properties.node.forEach(node => {
+      console.log(node);
       treeData.push({
         id: node.id,
         parent: this.properties.selectedFolder.Name,
@@ -204,9 +205,9 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                     rootFolder: this.properties.rootFolder,
                     selectedFolder: this.properties.selectedFolder,
                     onPropertyChange: (propertyPath: string, oldValue: any, newValue: any): void  => {
-                       console.log(propertyPath, oldValue, newValue);
+                       
                     },
-                    properties: undefined,
+                    properties: this.properties,
                     key: 'Document'
                 }),
                 PropertyPaneCheckbox('Can Create?', {
