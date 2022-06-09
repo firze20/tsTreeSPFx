@@ -88,7 +88,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       `;
 
       $('#jstree').jstree({ 'core' : {
-        'data' : arrayCollection /*[
+        'data' : this.properties.tree /*[
            this.properties.selectedFolder.Name,
            {
              'text' : 'Root node 2',
@@ -102,6 +102,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
              ]
           }
         ]*/
+        
     } });
     }
   
@@ -151,16 +152,20 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
 
   private mappingTree(): void {
     const treeData: ITreeData[] = [];
+    treeData.push({
+      id: this.properties.selectedFolder.Name,
+      parent: '#',
+      text: this.properties.selectedFolder.Name
+    });
     this.properties.node.forEach(node => {
       treeData.push({
-        text: this.properties.selectedFolder.Name,
-        state: {
-          disabled: false,
-          opened: true,
-          selected: false
-        },
+        id: node.id,
+        parent: this.properties.selectedFolder.Name,
+        text: node.Name
       });
     });
+    this.properties.tree = treeData;
+    console.log(this.properties.tree);
   }
 
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
