@@ -53,7 +53,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
 
   public render(): void {
     
-    var arrayCollection = [
+    /*var arrayCollection = [
       {"id": "animal", "parent": "#", "text": "Animals"},
       {"id": "device", "parent": "#", "text": "Devices"},
       {"id": "dog", "parent": "animal", "text": "Dogs"},
@@ -68,7 +68,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       {"id": "samsung", "parent": "mobile", "text": "Samsung Note II", "icon": "/"},
       {"id": "lenevo", "parent": "lappy", "text": "Lenevo", "icon": "/"},
       {"id": "hp", "parent": "lappy", "text": "HP", "icon": "/"}
-  ];
+  ];*/
 
     if(!this.properties.selectedFolder) {
       this.domElement.innerHTML = `
