@@ -187,14 +187,6 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
 
   }
 
-  private onFileClick() {
-    $(() => {
-      $('#jstree').on("select_node.jstree", (e, data) => {
-        alert("node_id: " + data.node.id); 
-      });
-    });
-  }
-
   protected get dataVersion(): Version {
     return Version.parse('1.0');
   }
