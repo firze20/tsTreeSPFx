@@ -34,7 +34,6 @@ export class FolderService {
     }
 
     //get child folders
-
     public async getChildFolders(folderPath: string): Promise<IFolderInfo[]> {
         const childFolders = await this.sp.web.getFolderByServerRelativePath(folderPath).folders();
         return childFolders;

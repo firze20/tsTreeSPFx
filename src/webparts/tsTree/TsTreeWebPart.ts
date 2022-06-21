@@ -101,11 +101,14 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                'Child 2'
              ]
           }
-        ]*/
-        
-    } });
+        ]*/   
+    }});
+
+    //On node click
+    $('#jstree').on("select_node.jstree", (e, data) => {
+      alert("node_id: " + data.node.id);
+    })
     }
-  
   }
 
   //Working
@@ -129,14 +132,15 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
      nodeFilesAndFolders.push({
        Name: folder.Name,
        id: folder.UniqueId,
-       type: 'folder'
+       type: 'folder',
      });
      //mapping files
      this.properties.filesInfo.forEach(file => {
        nodeFilesAndFolders.push({
          Name: file.Name,
          id: folder.UniqueId,
-         type: 'file'
+         type: 'file',
+         url: file.LinkingUrl
        });
      });
 
@@ -181,6 +185,14 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
     this.domElement.style.setProperty('--link', semanticColors.link);
     this.domElement.style.setProperty('--linkHovered', semanticColors.linkHovered);
 
+  }
+
+  private onFileClick() {
+    $(() => {
+      $('#jstree').on("select_node.jstree", (e, data) => {
+        alert("node_id: " + data.node.id); 
+      });
+    });
   }
 
   protected get dataVersion(): Version {
