@@ -106,8 +106,8 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
 
     //On node click
     $('#jstree').on("select_node.jstree", (e, data) => {
-      alert("node_id: " + data.node.id);
-    })
+      alert("node_id: " + data.node.text);
+    });
     }
   }
 
@@ -120,6 +120,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       const childFolderInfo = await this.folderService.getChildFolders(this.properties.selectedFolder.ServerRelativeUrl);
       this.properties.foldersInfo = childFolderInfo;
       this.mappingFoldersAndFiles();
+      // refresh js
     } catch (error) {
       console.log(error);
     }
@@ -171,6 +172,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
     });
     this.properties.tree = treeData;
     console.log(this.properties.tree);
+    $('#jstree').jstree(true).refresh();
   }
 
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
@@ -209,6 +211,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                     rootFolder: this.properties.rootFolder,
                     selectedFolder: this.properties.selectedFolder,
                     onPropertyChange: (propertyPath: string, oldValue: IFolder, newValue: IFolder): void  => {
+                       $('#jstree').jstree('refresh');
                        console.log(newValue);
                        this.properties.selectedFolder = newValue;
                     },
