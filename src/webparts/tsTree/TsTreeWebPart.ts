@@ -1,7 +1,6 @@
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneCheckbox,
   PropertyPaneToggle} from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import {SPComponentLoader} from '@microsoft/sp-loader';
@@ -45,8 +44,8 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
 
   //old folder and new folder
 
-  private oldFolder: IFolder;
-  private newFolder: IFolder;
+  private oldFolder: IFolder | undefined;
+  private newFolder: IFolder | undefined;
 
   protected async onInit(): Promise<void> {
     //Starting the folder service object as soon as the webpart gets loaded
@@ -103,19 +102,14 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
 
     //On node click
     $('#jstree').on("select_node.jstree", (e, data) => {
-      if(data.node.type === 'file') {
-        console.log('I am a file');
-      }
-      else {
-        alert("node_id: " + data.node.a_attr.href);
-        console.log(data.node.a_attr.href);
-      }
+      const node_url = data.node.a_attr.href;
+      window.location.href = node_url;
     });
     }
 
     //on folder change
 
-    if(this.oldFolder !== this.newFolder) {
+    if(this.oldFolder !== this.newFolder && this.newFolder) {
       console.log('I entered');
       $('#jstree').jstree(true).refresh();
     }
@@ -175,8 +169,10 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
         opened: this.properties.expandAll
       }
     });
+
+    console.log(treeData);
+
     this.properties.node.forEach(node => {
-      console.log(node);
       treeData.push({
         id: node.id,
         parent: this.properties.selectedFolder.Name,
@@ -187,6 +183,9 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
         a_attr: {"href": node.url}
       });
     });
+
+    console.log(treeData);
+
     this.properties.tree = treeData;
   }
 
