@@ -222,6 +222,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                     onPropertyChange: (propertyPath: string, oldValue: IFolder, newValue: IFolder): void  => {
                        this.oldFolder = oldValue;
                        this.newFolder = newValue;
+                       $('#jstree').jstree('refresh');
                        //this.setSelectedFolder(newValue);
                        //$('#jstree').jstree(true).refresh();
                        //$('#jstree').jstree('refresh');
