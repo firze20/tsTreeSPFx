@@ -19,7 +19,7 @@ export interface ITreeData {
 	    "changed",
 	    "conditionalselect"
     ];
-    "url"?: string;
+    "a_attr"?: object;
 }
 
 interface IState {

@@ -92,22 +92,11 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
           </div>
         </div>
       `;
+      
 
       $('#jstree').jstree({ 'core' : {
-        'data' : this.properties.tree /*[
-           this.properties.selectedFolder.Name,
-           {
-             'text' : 'Root node 2',
-             'state' : {
-               'opened' : true,
-               'selected' : true
-             },
-             'children' : [
-               { 'text' : 'Child 1' },
-               'Child 2'
-             ]
-          }
-        ]*/   
+        'data' : this.properties.tree
+         
     }});
 
     console.log(this.properties.expandAll);
@@ -118,8 +107,8 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
         console.log('I am a file');
       }
       else {
-        alert("node_id: " + data.node.text);
-        console.log(data.node.text);
+        alert("node_id: " + data.node.a_attr.href);
+        console.log(data.node.a_attr.href);
       }
     });
     }
@@ -195,7 +184,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
         state: {
           opened: this.properties.expandAll
         },
-        url: node.url
+        a_attr: {"href": node.url}
       });
     });
     this.properties.tree = treeData;
