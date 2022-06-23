@@ -19,10 +19,11 @@ export interface ITreeData {
 	    "changed",
 	    "conditionalselect"
     ];
+    "url"?: string;
 }
 
 interface IState {
-    "opened": boolean;
-    "disabled": boolean;
-    "selected": boolean;
+    "opened"?: boolean;
+    "disabled"?: boolean;
+    "selected"?: boolean;
 }

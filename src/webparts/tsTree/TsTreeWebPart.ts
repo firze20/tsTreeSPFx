@@ -1,7 +1,8 @@
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneCheckbox} from '@microsoft/sp-property-pane';
+  PropertyPaneCheckbox,
+  PropertyPaneToggle} from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import {SPComponentLoader} from '@microsoft/sp-loader';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
@@ -27,6 +28,7 @@ export interface ITsTreeWebPartProps {
   description: string;
   rootFolder: IFolder;
   selectedFolder: IFolder | undefined;
+  expandAll: boolean;
   canCreate: boolean;
   canEdit: boolean;
   canMove: boolean;
@@ -104,9 +106,17 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
         ]*/   
     }});
 
+    console.log(this.properties.expandAll);
+
     //On node click
     $('#jstree').on("select_node.jstree", (e, data) => {
-      alert("node_id: " + data.node.text);
+      if(data.node.type === 'file') {
+        console.log('I am a file');
+      }
+      else {
+        alert("node_id: " + data.node.url);
+        console.log(data.node);
+      }
     });
     }
   }
@@ -115,10 +125,10 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
   private async setSelectedFolder(folder: IFolder): Promise<void> {
     this.properties.selectedFolder = folder;
     try {
-      const filesInfo = await this.folderService.getFilesInsideFolder(this.properties.selectedFolder.ServerRelativeUrl);
-      this.properties.filesInfo = filesInfo;
       const childFolderInfo = await this.folderService.getChildFolders(this.properties.selectedFolder.ServerRelativeUrl);
       this.properties.foldersInfo = childFolderInfo;
+      const filesInfo = await this.folderService.getFilesInsideFolder(this.properties.selectedFolder.ServerRelativeUrl);
+      this.properties.filesInfo = filesInfo;
       this.mappingFoldersAndFiles();
       // refresh js
     } catch (error) {
@@ -145,7 +155,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
        });
      });
 
-     console.log(nodeFilesAndFolders);
+     // console.log(nodeFilesAndFolders);
 
      this.properties.node = nodeFilesAndFolders;
 
@@ -160,19 +170,24 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
     treeData.push({
       id: this.properties.selectedFolder.Name,
       parent: '#',
-      text: this.properties.selectedFolder.Name
+      text: this.properties.selectedFolder.Name,
+      state: {
+        opened: this.properties.expandAll
+      }
     });
     this.properties.node.forEach(node => {
       console.log(node);
       treeData.push({
         id: node.id,
         parent: this.properties.selectedFolder.Name,
-        text: node.Name
+        text: node.Name,
+        state: {
+          opened: this.properties.expandAll
+        },
+        url: node.url
       });
     });
     this.properties.tree = treeData;
-    console.log(this.properties.tree);
-    $('#jstree').jstree(true).refresh();
   }
 
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
@@ -204,36 +219,42 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
             {
               //groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyFieldFolderPicker('documents', {
+                PropertyFieldFolderPicker('selectedFolder', {
                     context: this.context,
                     label: 'Select a folder',
                     onSelect: (folder) => this.setSelectedFolder(folder),
                     rootFolder: this.properties.rootFolder,
                     selectedFolder: this.properties.selectedFolder,
                     onPropertyChange: (propertyPath: string, oldValue: IFolder, newValue: IFolder): void  => {
-                       $('#jstree').jstree('refresh');
+                       //$('#jstree').jstree('refresh');
+                       console.log('I have entered.');
+                       console.log(oldValue);
                        console.log(newValue);
                        this.properties.selectedFolder = newValue;
                     },
                     properties: this.properties,
                     key: 'Document'
                 }),
-                PropertyPaneCheckbox('Can Create?', {
-                  text: 'Enable create folders?',
-                  checked: this.properties.canCreate
+                PropertyPaneToggle('expandAll', {
+                  label: 'Do you want to expand all folders?',
+                  checked: this.properties.expandAll,
                 }),
-                PropertyPaneCheckbox('Can Edit?', {
-                  text: 'Enable edit folder name ?',
-                  checked: this.properties.canEdit
+                PropertyPaneToggle('canCreate', {
+                  label: 'Allow create option?',
+                  checked: this.properties.canCreate,
                 }),
-                PropertyPaneCheckbox('Can Move?', {
-                  text: 'Enable move folders?',
-                  checked: this.properties.canMove
+                PropertyPaneToggle('canEdit', {
+                  label: 'Allow edit option?',
+                  checked: this.properties.canEdit,
                 }),
-                PropertyPaneCheckbox('Can Delete?', {
-                  text: 'Enable delete folders?',
-                  checked: this.properties.canDelete
-                })
+                PropertyPaneToggle('canMove', {
+                  label: 'Allow move folders/files option?',
+                  checked: this.properties.canMove,
+                }),
+                PropertyPaneToggle('canDelete', {
+                  label: 'Allow delete folders/files option?',
+                  checked: this.properties.canDelete,
+                }),
               ]
             }
           ]
