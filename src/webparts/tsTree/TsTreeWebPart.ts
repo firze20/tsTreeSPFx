@@ -80,6 +80,8 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
        <div class="${styles.welcome}">
         <h2>JSTree <img class="${styles.jstreeIcon}" src=${require('./assets/jstree.png')} /> </h2>
         <p>Pick a folder from the web part configuration properties.</p>
+        <br/>
+        <p>Beta Version 0.0.1 Firze20</p>
         </div>`;
     }
 
