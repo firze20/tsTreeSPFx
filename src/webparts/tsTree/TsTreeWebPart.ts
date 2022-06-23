@@ -143,7 +143,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
      this.properties.filesInfo.forEach(file => {
        nodeFilesAndFolders.push({
          Name: file.Name,
-         id: folder.UniqueId,
+         id: file.UniqueId,
          type: 'file',
          url: file.LinkingUrl
        });
