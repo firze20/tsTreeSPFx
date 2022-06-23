@@ -43,6 +43,10 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
 
   private folderService: FolderService;
 
+  //old folder and new folder
+
+  private oldFolder: IFolder;
+  private newFolder: IFolder;
 
   protected async onInit(): Promise<void> {
     //Starting the folder service object as soon as the webpart gets loaded
@@ -114,10 +118,17 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
         console.log('I am a file');
       }
       else {
-        alert("node_id: " + data.node.url);
-        console.log(data.node);
+        alert("node_id: " + data.node.text);
+        console.log(data.node.text);
       }
     });
+    }
+
+    //on folder change
+
+    if(this.oldFolder !== this.newFolder) {
+      console.log('I entered');
+      $('#jstree').jstree(true).refresh();
     }
   }
 
@@ -226,11 +237,11 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                     rootFolder: this.properties.rootFolder,
                     selectedFolder: this.properties.selectedFolder,
                     onPropertyChange: (propertyPath: string, oldValue: IFolder, newValue: IFolder): void  => {
+                       this.oldFolder = oldValue;
+                       this.newFolder = newValue;
+                       //this.setSelectedFolder(newValue);
+                       //$('#jstree').jstree(true).refresh();
                        //$('#jstree').jstree('refresh');
-                       console.log('I have entered.');
-                       console.log(oldValue);
-                       console.log(newValue);
-                       this.properties.selectedFolder = newValue;
                     },
                     properties: this.properties,
                     key: 'Document'
