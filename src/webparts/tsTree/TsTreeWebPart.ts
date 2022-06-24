@@ -69,18 +69,23 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
     }
 
     else {
-      this.domElement.innerHTML = `
-        <div class="${styles.divTree}">
-          <div id='jstree'>
+      this.renderTree();
+    }
 
-          </div>
+  }
+
+  private renderTree(): void {
+    this.domElement.innerHTML = `
+      <div class="${styles.divTree}">
+        <div id='jstree'>
         </div>
-      `;
-      
+      </div>
+    
+    `;
 
-      $('#jstree').jstree({ 'core' : {
-        'data' : this.properties.tree
-         
+    $('#jstree').jstree({ 'core' : {
+      'data' : this.properties.tree
+       
     }});
 
     //On node click
@@ -91,11 +96,15 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       }
     });
 
-    /*if(this.newFolder && this.newFolder !== this.oldFolder) {
-      $('#jstree').jstree(true).settings.core.data = this.properties.tree;
-      $('#mytree').jstree(true).redraw(true);
-    }*/
+    if(this.properties.expandAll) {
+      console.log(this.properties.expandAll);
+      $('#jstree').jstree("open_all");
     }
+
+    else {
+      $("#jstree").jstree("close_all");
+    }
+
   }
 
   //Working
@@ -202,10 +211,11 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                     rootFolder: this.properties.rootFolder,
                     selectedFolder: this.properties.selectedFolder,
                     onPropertyChange: (propertyPath: string, oldValue: IFolder, newValue: IFolder): void  => {
-                      
+
                     },
                     properties: this.properties,
-                    key: 'Document'
+                    key: 'Document',
+                    canCreateFolders: true,
                 }),
                 PropertyPaneToggle('expandAll', {
                   label: 'Do you want to expand all folders?',
