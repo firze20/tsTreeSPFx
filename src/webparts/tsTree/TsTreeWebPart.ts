@@ -57,23 +57,6 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
   }
 
   public render(): void {
-    
-    /*var arrayCollection = [
-      {"id": "animal", "parent": "#", "text": "Animals"},
-      {"id": "device", "parent": "#", "text": "Devices"},
-      {"id": "dog", "parent": "animal", "text": "Dogs"},
-      {"id": "lion", "parent": "animal", "text": "Lions"},
-      {"id": "mobile", "parent": "device", "text": "Mobile Phones"},
-      {"id": "lappy", "parent": "device", "text": "Laptops"},
-      {"id": "daburman", "parent": "dog", "text": "Dabur Man", "icon": "/"},
-      {"id": "Dalmation", "parent": "dog", "text": "Dalmatian", "icon": "/"},
-      {"id": "african", "parent": "lion", "text": "African Lion", "icon": "/"},
-      {"id": "indian", "parent": "lion", "text": "Indian Lion", "icon": "/"},
-      {"id": "apple", "parent": "mobile", "text": "Apple IPhone 6", "icon": "/"},
-      {"id": "samsung", "parent": "mobile", "text": "Samsung Note II", "icon": "/"},
-      {"id": "lenevo", "parent": "lappy", "text": "Lenevo", "icon": "/"},
-      {"id": "hp", "parent": "lappy", "text": "HP", "icon": "/"}
-  ];*/
 
     if(!this.properties.selectedFolder) {
       this.domElement.innerHTML = `
@@ -103,16 +86,11 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
     //On node click
     $('#jstree').on("select_node.jstree", (e, data) => {
       const node_url = data.node.a_attr.href;
-      window.location.href = node_url;
+      if(node_url !== '#') {
+        window.open(node_url);
+      }
     });
     }
-
-    //on folder change
-
-    /*if(this.oldFolder !== this.newFolder && this.newFolder !== undefined) {
-      console.log('I entered');
-      $('#jstree').jstree().refresh();
-    } */
   }
 
   //Working
@@ -164,8 +142,6 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
         opened: this.properties.expandAll
       }
     });
-
-    console.log(treeData);
 
     this.properties.node.forEach(node => {
       treeData.push({
@@ -222,9 +198,6 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                     onPropertyChange: (propertyPath: string, oldValue: IFolder, newValue: IFolder): void  => {
                        this.oldFolder = oldValue;
                        this.newFolder = newValue;
-                       $('#jstree').jstree('refresh');
-                       //this.setSelectedFolder(newValue);
-                       //$('#jstree').jstree(true).refresh();
                        //$('#jstree').jstree('refresh');
                     },
                     properties: this.properties,
