@@ -90,6 +90,11 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
         window.open(node_url);
       }
     });
+
+    /*if(this.newFolder && this.newFolder !== this.oldFolder) {
+      $('#jstree').jstree(true).settings.core.data = this.properties.tree;
+      $('#mytree').jstree(true).redraw(true);
+    }*/
     }
   }
 
@@ -101,6 +106,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       this.properties.foldersInfo = childFolderInfo;
       const filesInfo = await this.folderService.getFilesInsideFolder(this.properties.selectedFolder.ServerRelativeUrl);
       this.properties.filesInfo = filesInfo;
+      console.log(this.properties.filesInfo);
       this.mappingFoldersAndFiles();
       // refresh js
     } catch (error) {
@@ -196,9 +202,12 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                     rootFolder: this.properties.rootFolder,
                     selectedFolder: this.properties.selectedFolder,
                     onPropertyChange: (propertyPath: string, oldValue: IFolder, newValue: IFolder): void  => {
-                       this.oldFolder = oldValue;
-                       this.newFolder = newValue;
+                       //this.oldFolder = oldValue;
+                       //this.newFolder = newValue;
+                       //this.setSelectedFolder(this.newFolder);
                        //$('#jstree').jstree('refresh');
+                       console.log(newValue.Name);
+                       this.setSelectedFolder(newValue);
                     },
                     properties: this.properties,
                     key: 'Document'

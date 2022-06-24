@@ -36,12 +36,18 @@ export class FolderService {
     //get child folders
     public async getChildFolders(folderPath: string): Promise<IFolderInfo[]> {
         const childFolders = await this.sp.web.getFolderByServerRelativePath(folderPath).folders();
-        return childFolders;
+        if(childFolders.length > 0) {
+            return childFolders;
+        }
+        else return [];
     }
 
     //get files inside folder
     public async getFilesInsideFolder(folderPath: string): Promise<IFileInfo[]> {
         const files = await this.sp.web.getFolderByServerRelativePath(folderPath).files();
-        return files;
+        if(files.length > 0) {
+            return files;
+        }
+        else return [];
     }
 }
