@@ -116,14 +116,14 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       const filesInfo = await this.folderService.getFilesInsideFolder(this.properties.selectedFolder.ServerRelativeUrl);
       this.properties.filesInfo = filesInfo;
       console.log(this.properties.filesInfo);
-      this.mappingFoldersAndFiles();
+      await this.mappingFoldersAndFiles();
       // refresh js
     } catch (error) {
       console.log(error);
     }
   }
 
-  private mappingFoldersAndFiles(): void {
+  private async mappingFoldersAndFiles(): Promise<void> {
     const nodeFilesAndFolders: INode[] = [];
    //mapping folder 
    this.properties.foldersInfo.forEach(folder => {
@@ -133,7 +133,8 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
        type: 'folder',
      });
      //mapping files
-     this.properties.filesInfo.forEach(file => {
+    this.properties.filesInfo.forEach(file => {
+      console.log(file);
        nodeFilesAndFolders.push({
          Name: file.Name,
          id: file.UniqueId,
