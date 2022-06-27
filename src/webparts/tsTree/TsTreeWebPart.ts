@@ -50,7 +50,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
   protected async onInit(): Promise<void> {
     //Starting the folder service object as soon as the webpart gets loaded
     this.folderService = new FolderService(this.context);
-    this.properties.rootFolder = await this.folderService.getRootFolder();
+    !this.properties.selectedFolder ? this.properties.rootFolder = await this.folderService.getRootFolder() : this.setSelectedFolder(this.properties.selectedFolder);
     //Load css js tree
     SPComponentLoader.loadCss('https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css');
     return super.onInit();
