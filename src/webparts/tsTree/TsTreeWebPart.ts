@@ -16,12 +16,7 @@ import 'jstree';
 
 //Service
 import {FolderService} from '../services/folder.service';
-import { IFileInfo } from '@pnp/sp/files/types';
-import { IFolderInfo } from "@pnp/sp/folders";
 
-//models
-
-import {INode, ITreeData} from '../../models';
 
 export interface ITsTreeWebPartProps {
   description: string;
