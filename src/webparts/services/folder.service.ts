@@ -92,6 +92,12 @@ export class FolderService {
                 return 'excel';
             case 'pdf':
                 return 'pdf';
+            case 'png':
+                return 'image';
+            case 'jpg':
+                return 'image';
+            case 'jpeg':
+                return 'image';
             default:
                 return 'default';
         }
