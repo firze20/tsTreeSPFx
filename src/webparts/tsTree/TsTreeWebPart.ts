@@ -11,6 +11,7 @@ import {IFolder, PropertyFieldFolderPicker} from '@pnp/spfx-property-controls';
 
 import styles from './TsTreeWebPart.module.scss';
 
+
 import $ from 'jquery';
 import 'jstree';
 
@@ -71,10 +72,33 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
     
     `;
 
-    $('#jstree').jstree({ 'core' : {
-      'data' : await this.folderService.getTree(this.properties.selectedFolder, this.properties.expandAll)
-       
-    }});
+    $('#jstree').jstree(
+      { 
+        'core' : {
+          'data' : await this.folderService.getTree(this.properties.selectedFolder, this.properties.expandAll)
+        },
+        types: {
+          "folder": {
+            "icon" : require('./assets/folder-svgrepo-com.svg')
+          },
+          "default" : {
+            "icon": require('./assets/file-svgrepo-com.svg')
+          }
+
+        },
+        plugins: ["themes", "types"]
+      }
+  );
+
+  $('#jstree').on('open_node.jstree', (e, data) => {
+    console.log('Abri!');
+    data.instance.set_icon(data.node, require('./assets/open_folder-svgrepo-com.svg'));
+  });
+
+  $('#jstree').on('close_node.jstree', (e, data) => {
+    data.instance.set_icon(data.node, require('./assets/folder-svgrepo-com.svg'));
+    console.log('Fechei!');
+  });
 
     //On node click
     $('#jstree').on("select_node.jstree", async (e, data) => {

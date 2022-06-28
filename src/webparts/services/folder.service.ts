@@ -42,7 +42,7 @@ export class FolderService {
                 id: folder.Name,
                 parent: '#',
                 text: folder.Name,
-                type: 'root',
+                type: 'folder',
                 state: {
                     opened: expandNodes
                 }
@@ -107,7 +107,6 @@ export class FolderService {
     //get share link for files like PDF types 
     public async getShareLink(fileId: string): Promise<string> {
         const shareLink = await this.sp.web.getFolderById(fileId).getShareLink(SharingLinkKind.AnonymousView);
-        console.log(shareLink.sharingLinkInfo.Url);
         return shareLink.sharingLinkInfo.Url;
     }
 }
