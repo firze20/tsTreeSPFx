@@ -60,7 +60,7 @@ export class FolderService {
             }
 
             if(childFiles.length > 0) {
-                childFiles.forEach(file => {
+                childFiles.forEach(async file => {
                     tree_data.push({
                         id: file.UniqueId,
                         parent: folder.Name,
@@ -78,13 +78,13 @@ export class FolderService {
     }
 
     //listItemAllFields
-    public async getFolderFields(folderPath: string): Promise<ISPInstance> {
+    private async getFolderFields(folderPath: string): Promise<ISPInstance> {
         const itemFields: ISPInstance = await this.sp.web.getFolderByServerRelativePath(folderPath).listItemAllFields();
         return itemFields;
     }
 
     //get child folders
-    public async getChildFolders(folderPath: string): Promise<IFolderInfo[]> {
+    private async getChildFolders(folderPath: string): Promise<IFolderInfo[]> {
         const childFolders = await this.sp.web.getFolderByServerRelativePath(folderPath).folders();
         if(childFolders.length > 0) {
             return childFolders;
@@ -93,16 +93,9 @@ export class FolderService {
     }
 
     //get files inside folder
-    public async getFilesInsideFolder(folderPath: string): Promise<IFileInfo[]> {
+    private async getFilesInsideFolder(folderPath: string): Promise<IFileInfo[]> {
         const files = await this.sp.web.getFolderByServerRelativePath(folderPath).files();
         if(files.length > 0) {
-            files.forEach(async file => {
-                if(file.LinkingUrl === '') {
-                    const shareLink = await this.getShareLink(file.ServerRelativeUrl);
-                    file.LinkingUrl = shareLink;
-                }
-            });
-            console.log(files);
             return files;
         }
         else return [];
@@ -111,9 +104,9 @@ export class FolderService {
     }
 
     //get share link for files like PDF types 
-    private async getShareLink(folderPath: string): Promise<string> {
-        const shareLink = await this.sp.web.getFolderByServerRelativePath(folderPath).getShareLink(SharingLinkKind.AnonymousView);
-        //console.log(shareLink.sharingLinkInfo.Url);
+    public async getShareLink(fileId: string): Promise<string> {
+        const shareLink = await this.sp.web.getFolderById(fileId).getShareLink(SharingLinkKind.AnonymousView);
+        console.log(shareLink.sharingLinkInfo.Url);
         return shareLink.sharingLinkInfo.Url;
     }
 }
