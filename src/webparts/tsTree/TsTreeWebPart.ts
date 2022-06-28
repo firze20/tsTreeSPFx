@@ -18,6 +18,9 @@ import 'jstree';
 //Service
 import {FolderService} from '../services/folder.service';
 
+const iconFolder = require('./assets/folder-svgrepo-com.svg');
+const iconFolderOpen = require('./assets/open_folder-svgrepo-com.svg');
+const defaultIcon = require('./assets/file-svgrepo-com.svg');
 
 export interface ITsTreeWebPartProps {
   description: string;
@@ -79,10 +82,10 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
         },
         types: {
           "folder": {
-            "icon" : require('./assets/folder-svgrepo-com.svg')
+            "icon" : this.properties.expandAll ? iconFolderOpen : iconFolder
           },
           "default" : {
-            "icon": require('./assets/file-svgrepo-com.svg')
+            "icon": defaultIcon
           }
 
         },
@@ -91,12 +94,11 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
   );
 
   $('#jstree').on('open_node.jstree', (e, data) => {
-    console.log('Abri!');
-    data.instance.set_icon(data.node, require('./assets/open_folder-svgrepo-com.svg'));
+    data.instance.set_icon(data.node, iconFolderOpen);
   });
 
   $('#jstree').on('close_node.jstree', (e, data) => {
-    data.instance.set_icon(data.node, require('./assets/folder-svgrepo-com.svg'));
+    data.instance.set_icon(data.node, iconFolder);
     console.log('Fechei!');
   });
 
