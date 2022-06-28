@@ -48,11 +48,11 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
   private newFolder: IFolder | undefined;
 
   protected async onInit(): Promise<void> {
+    //Load css js tree
+    SPComponentLoader.loadCss('https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css');
     //Starting the folder service object as soon as the webpart gets loaded
     this.folderService = new FolderService(this.context);
     !this.properties.selectedFolder ? this.properties.rootFolder = await this.folderService.getRootFolder() : this.setSelectedFolder(this.properties.selectedFolder);
-    //Load css js tree
-    SPComponentLoader.loadCss('https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css');
     return super.onInit();
   }
 
@@ -74,7 +74,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
 
   }
 
-  private renderTree(): void {
+  private async renderTree(): Promise<void> {
     this.domElement.innerHTML = `
       <div class="${styles.divTree}">
         <div id='jstree'>
@@ -84,7 +84,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
     `;
 
     $('#jstree').jstree({ 'core' : {
-      'data' : this.properties.tree
+      'data' : await this.folderService.getTree(this.properties.selectedFolder, this.properties.expandAll)
        
     }});
 

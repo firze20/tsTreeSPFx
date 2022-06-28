@@ -14,6 +14,8 @@ import { SharingLinkKind } from "@pnp/sp/sharing";
 
 //import { folderFromServerRelativePath } from "@pnp/sp/folders";
 
+import {ITreeData} from '../../models';
+
 export class FolderService {
 
     private context: WebPartContext; // web part context to be user with sp from pnpjs REST sharepoint api calls
@@ -29,8 +31,54 @@ export class FolderService {
         return rootFolder;
     }
 
+    public async getTree(folder: IFolder, expandNodes?: boolean): Promise<ITreeData[]> {
+        const folderRelativeUrl = folder.ServerRelativeUrl;
+        const tree_data: ITreeData[] = [];
+        try {
+            const childFolders = await this.getChildFolders(folderRelativeUrl);
+            const childFiles = await this.getFilesInsideFolder(folderRelativeUrl);
+
+            tree_data.push({
+                id: folder.Name,
+                parent: '#',
+                text: folder.Name,
+                state: {
+                    opened: expandNodes
+                }
+            });
+            
+            if(childFolders.length > 0) {
+                childFolders.forEach(childFolder => {
+                    tree_data.push(
+                        {
+                            id: childFolder.UniqueId,
+                            parent: folder.Name,
+                            text: childFolder.Name
+                        }
+                    );
+                });
+            }
+
+            if(childFiles.length > 0) {
+                childFiles.forEach(file => {
+                    tree_data.push({
+                        id: file.UniqueId,
+                        parent: folder.Name,
+                        text: file.Name,
+                        a_attr: { "href": file.LinkingUrl}
+                    });
+                });
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+
+        return tree_data;
+    }
+
     //listItemAllFields
-    public async getFolderFiels(folderPath: string): Promise<ISPInstance> {
+    public async getFolderFields(folderPath: string): Promise<ISPInstance> {
         const itemFields: ISPInstance = await this.sp.web.getFolderByServerRelativePath(folderPath).listItemAllFields();
         return itemFields;
     }
