@@ -21,6 +21,9 @@ import {FolderService} from '../services/folder.service';
 const iconFolder = require('./assets/folder-svgrepo-com.svg');
 const iconFolderOpen = require('./assets/open_folder-svgrepo-com.svg');
 const defaultIcon = require('./assets/file-svgrepo-com.svg');
+const pdfIcon = require('./assets/pdf-svgrepo-com.svg');
+const wordIcon = require('./assets/word-svgrepo-com.svg');
+const excelIcon = require('./assets/excel-svgrepo-com.svg');
 
 export interface ITsTreeWebPartProps {
   description: string;
@@ -83,6 +86,15 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
         types: {
           "folder": {
             "icon" : this.properties.expandAll ? iconFolderOpen : iconFolder
+          },
+          "pdf": {
+            "icon": pdfIcon
+          },
+          "word": {
+            "icon": wordIcon
+          },
+          "excel": {
+            "icon": excelIcon
           },
           "default" : {
             "icon": defaultIcon

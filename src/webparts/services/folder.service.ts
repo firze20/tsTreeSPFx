@@ -54,7 +54,8 @@ export class FolderService {
                         {
                             id: childFolder.UniqueId,
                             parent: folder.Name,
-                            text: childFolder.Name
+                            text: childFolder.Name,
+                            type: 'folder'
                         }
                     );
                 });
@@ -62,10 +63,12 @@ export class FolderService {
 
             if(childFiles.length > 0) {
                 childFiles.forEach(async file => {
+                const extension = file.Name.substring(file.Name.lastIndexOf(".") + 1);
                     tree_data.push({
                         id: file.UniqueId,
                         parent: folder.Name,
                         text: file.Name,
+                        type: this.setType(extension),
                         a_attr: { "href": file.LinkingUrl}
                     });
                 });
@@ -76,6 +79,22 @@ export class FolderService {
         }
 
         return tree_data;
+    }
+
+    private setType(fileExtension: string): string {
+        console.log(fileExtension);
+        switch (fileExtension) {
+            case 'docx':
+                return 'word';
+            case 'doc':
+                return 'word';
+            case 'xlsx':
+                return 'excel';
+            case 'pdf':
+                return 'pdf';
+            default:
+                return 'default';
+        }
     }
 
     //listItemAllFields
