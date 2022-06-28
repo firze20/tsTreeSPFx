@@ -42,6 +42,7 @@ export class FolderService {
                 id: folder.Name,
                 parent: '#',
                 text: folder.Name,
+                type: 'root',
                 state: {
                     opened: expandNodes
                 }

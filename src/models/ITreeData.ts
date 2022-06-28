@@ -5,6 +5,7 @@ export interface ITreeData {
     "state"?: IState;
     "parent": string;
     "children"?: string[] | object[];
+    "type"?: string;
     "plugins"?: [
         "checkbox",
         "contextmenu",

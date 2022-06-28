@@ -90,7 +90,6 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
     });
 
     if(this.properties.expandAll) {
-      console.log(this.properties.expandAll);
       $('#jstree').jstree("open_all");
     }
 
