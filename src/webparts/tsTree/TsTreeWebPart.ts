@@ -32,10 +32,6 @@ export interface ITsTreeWebPartProps {
   canEdit: boolean;
   canMove: boolean;
   canDelete: boolean;
-  filesInfo: IFileInfo[] | undefined;
-  foldersInfo: IFolderInfo[] | undefined;
-  node: INode[] | undefined;
-  tree: ITreeData[] | undefined;
 }
 
 export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartProps> {
@@ -44,15 +40,12 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
 
   //old folder and new folder
 
-  private oldFolder: IFolder | undefined;
-  private newFolder: IFolder | undefined;
-
   protected async onInit(): Promise<void> {
     //Load css js tree
     SPComponentLoader.loadCss('https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css');
     //Starting the folder service object as soon as the webpart gets loaded
     this.folderService = new FolderService(this.context);
-    !this.properties.selectedFolder ? this.properties.rootFolder = await this.folderService.getRootFolder() : this.setSelectedFolder(this.properties.selectedFolder);
+    //!this.properties.selectedFolder ? this.properties.rootFolder = await this.folderService.getRootFolder() : this.setSelectedFolder(this.properties.selectedFolder);
     return super.onInit();
   }
 
@@ -104,76 +97,6 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
     else {
       $("#jstree").jstree("close_all");
     }
-
-  }
-
-  //Working
-  private async setSelectedFolder(folder: IFolder): Promise<void> {
-    this.properties.selectedFolder = folder;
-    try {
-      const childFolderInfo = await this.folderService.getChildFolders(this.properties.selectedFolder.ServerRelativeUrl);
-      this.properties.foldersInfo = childFolderInfo;
-      const filesInfo = await this.folderService.getFilesInsideFolder(this.properties.selectedFolder.ServerRelativeUrl);
-      this.properties.filesInfo = filesInfo;
-      console.log(this.properties.filesInfo);
-      await this.mappingFoldersAndFiles();
-      // refresh js
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  private async mappingFoldersAndFiles(): Promise<void> {
-    const nodeFilesAndFolders: INode[] = [];
-   //mapping folder 
-   this.properties.foldersInfo.forEach(folder => {
-     nodeFilesAndFolders.push({
-       Name: folder.Name,
-       id: folder.UniqueId,
-       type: 'folder',
-     });
-     //mapping files
-    this.properties.filesInfo.forEach(file => {
-      console.log(file);
-       nodeFilesAndFolders.push({
-         Name: file.Name,
-         id: file.UniqueId,
-         type: 'file',
-         url: file.LinkingUrl
-       });
-     });
-     this.properties.node = nodeFilesAndFolders;
-     console.log(this.properties.node);
-     this.mappingTree();
-   });
-  }
-
-  private mappingTree(): void {
-    const treeData: ITreeData[] = [];
-    treeData.push({
-      id: this.properties.selectedFolder.Name,
-      parent: '#',
-      text: this.properties.selectedFolder.Name,
-      state: {
-        opened: this.properties.expandAll
-      }
-    });
-
-    this.properties.node.forEach(node => {
-      treeData.push({
-        id: node.id,
-        parent: this.properties.selectedFolder.Name,
-        text: node.Name,
-        state: {
-          opened: this.properties.expandAll
-        },
-        a_attr: {"href": node.url}
-      });
-    });
-
-    console.log(treeData);
-
-    this.properties.tree = treeData;
   }
 
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
@@ -208,7 +131,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                 PropertyFieldFolderPicker('selectedFolder', {
                     context: this.context,
                     label: 'Select a folder',
-                    onSelect: (folder) =>  this.properties.selectedFolder = folder,//this.setSelectedFolder(folder),
+                    onSelect: (folder) =>  this.properties.selectedFolder = folder,
                     rootFolder: this.properties.rootFolder,
                     selectedFolder: this.properties.selectedFolder,
                     onPropertyChange: (propertyPath: string, oldValue: IFolder, newValue: IFolder): void  => {
@@ -216,7 +139,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                     },
                     properties: this.properties,
                     key: 'Document',
-                    canCreateFolders: true,
+                    canCreateFolders: false, // true
                 }),
                 PropertyPaneToggle('expandAll', {
                   label: 'Do you want to expand all folders?',
