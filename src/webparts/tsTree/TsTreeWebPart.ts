@@ -208,7 +208,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
                 PropertyFieldFolderPicker('selectedFolder', {
                     context: this.context,
                     label: 'Select a folder',
-                    onSelect: (folder) => this.setSelectedFolder(folder),
+                    onSelect: (folder) =>  this.properties.selectedFolder = folder,//this.setSelectedFolder(folder),
                     rootFolder: this.properties.rootFolder,
                     selectedFolder: this.properties.selectedFolder,
                     onPropertyChange: (propertyPath: string, oldValue: IFolder, newValue: IFolder): void  => {
