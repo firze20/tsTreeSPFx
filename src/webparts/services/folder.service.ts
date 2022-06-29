@@ -55,7 +55,10 @@ export class FolderService {
                             id: childFolder.UniqueId,
                             parent: folder.Name,
                             text: childFolder.Name,
-                            type: 'folder'
+                            type: 'folder',
+                            children: [
+                                
+                            ]
                         }
                     );
                 });

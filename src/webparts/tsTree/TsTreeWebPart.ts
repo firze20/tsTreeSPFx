@@ -72,7 +72,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
 
   private async renderTree(): Promise<void> {
     this.domElement.innerHTML = `
-      <div class="${styles.divTree}">
+      <div class="${styles.tsTree}">
         <div id='jstree'>
         </div>
       </div>
