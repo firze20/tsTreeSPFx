@@ -4,7 +4,7 @@ export interface ITreeData {
     "icon"?: string;
     "state"?: IState;
     "parent": string;
-    "children"?: string[] | object[];
+    "children"?: string[] | object[] | ITreeData[];
     "type"?: string;
     "plugins"?: [
         "checkbox",
