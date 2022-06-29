@@ -124,6 +124,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
     $('#jstree').on("select_node.jstree", async (e, data) => {
       const node_url = data.node.a_attr.href;
       const node_id = data.node.id;
+      console.log(data.node.type);
       if(!node_url) {
         const shareLink = await this.folderService.getShareLink(node_id);
         window.open(shareLink);

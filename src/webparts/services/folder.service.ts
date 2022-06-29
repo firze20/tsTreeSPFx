@@ -85,7 +85,6 @@ export class FolderService {
     }
 
     private setType(fileExtension: string): string {
-        console.log(fileExtension);
         switch (fileExtension) {
             case 'docx':
                 return 'word';
