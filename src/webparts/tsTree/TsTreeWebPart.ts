@@ -143,16 +143,17 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       else if(node_type === 'folder' && node_name !== this.properties.selectedFolder.Name) {
         const childData = await this.folderService.getChildNodes(node_id);
         console.log(childData);
-        $('#jstree').jstree().create_node(
-            node_id, 
-            {
-              "id": "c3",
-              "text": "Child 3"
-            }, 
-            'inside', 
-            (result: any) => console.log(result));
-        console.log(data);
-        console.log(data.node);
+        if(childData.length > 0) {
+          childData.forEach(node => {
+            if(!$('#jstree').jstree(true).get_node(node.id)) {
+              $('#jstree').jstree().create_node(
+                node_id, 
+                node,
+                'inside', 
+                (result: any) => console.log(result));
+            } 
+          });
+        }
       }
     });
 

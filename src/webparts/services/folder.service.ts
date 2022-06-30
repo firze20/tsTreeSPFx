@@ -101,10 +101,6 @@ export class FolderService {
                             parent: folder.Name,
                             text: childFolder.Name,
                             type: 'folder',
-                            children: true,
-                            state: {
-                                opened: true,
-                            }
                         }
                     );
                 });
