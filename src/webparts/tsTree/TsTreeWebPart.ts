@@ -84,7 +84,8 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       { 
         'core' : {
           'data' : await this.folderService.getTree(this.properties.selectedFolder, this.properties.expandAll),
-          'async': true
+          'async': true,
+          'check_callback': true
         },
         types: {
           "folder": {
@@ -131,6 +132,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       const node_id = data.node.id;
       const node_type = data.node.type;
       const node_name = data.node.text;
+      console.log(data.node);
       if(!node_url) {
         const shareLink = await this.folderService.getShareLink(node_id);
         window.open(shareLink);
@@ -138,17 +140,21 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       else if(node_url !== '#') {
         window.open(node_url);
       }
-      else if(node_type === 'folder') {
+      else if(node_type === 'folder' && node_name !== this.properties.selectedFolder.Name) {
         const childData = await this.folderService.getChildNodes(node_id);
-        const newNode = {
-          state: "open",
-          data: childData
-        };
-        data.instance.create_node(node_id, newNode, 'last');
-        data.instance.toggle_node(data.node);
-        console.log(data.instance);
         console.log(childData);
+        $('#jstree').jstree().create_node(
+            node_id, 
+            {
+              "id": "c3",
+              "text": "Child 3"
+            }, 
+            'inside', 
+            (result: any) => console.log(result));
+        //$('#jstree).jstree().create_node('a93b5d6d-30d2-41f5-ae46-ff1eaa18b343', 'Exemplo')
+        $('#jstree').jstree().redraw();
         console.log(data);
+        console.log(data.node);
       }
     });
 

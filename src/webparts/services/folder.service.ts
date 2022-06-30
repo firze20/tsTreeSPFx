@@ -56,7 +56,10 @@ export class FolderService {
                             parent: folder.Name,
                             text: childFolder.Name,
                             type: 'folder',
-                            children: true
+                            state: {
+                                opened: false
+                            },
+                            //children: true
                         }
                     );
                 });
@@ -95,7 +98,7 @@ export class FolderService {
                     tree_data.push(
                         {
                             id: childFolder.UniqueId,
-                            parent: folderId,
+                            parent: folder.Name,
                             text: childFolder.Name,
                             type: 'folder',
                             children: true,
@@ -108,7 +111,7 @@ export class FolderService {
             }
 
             if(childFiles.length > 0) {
-                childFiles.forEach(async file => {
+                childFiles.forEach( file => {
                     const extension = file.Name.substring(file.Name.lastIndexOf(".") + 1);
                     tree_data.push({
                         id: file.UniqueId,

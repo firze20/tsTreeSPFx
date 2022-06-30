@@ -1,5 +1,5 @@
 export interface ITreeData {
-    "id"?: string;
+    "id": string;
     "text": string;
     "icon"?: string;
     "state"?: IState;
