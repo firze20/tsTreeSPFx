@@ -73,7 +73,8 @@ export class FolderService {
                         parent: folder.Name,
                         text: file.Name,
                         type: this.setType(extension),
-                        a_attr: { "href": file.LinkingUrl}
+                        a_attr: { "href": file.LinkingUrl},
+                        children: false
                     });
                 });
             }
@@ -114,6 +115,7 @@ export class FolderService {
                         parent: folderId,
                         text: file.Name,
                         type: this.setType(extension),
+                        children: false,
                         a_attr: {"href": file.LinkingUrl}
                     });
                 });

@@ -116,7 +116,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
           }
 
         },
-        plugins: ["themes", "types"]
+        plugins: ["themes", "types", this.properties.canMove ? 'dnd' : null]
       }
   );
 
