@@ -134,7 +134,8 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
         window.open(node_url);
       }
       else if(node_type === 'folder') {
-        $('#jstree').jstree("create_node", node_id, 'inside', await this.folderService.getTree(this.properties.selectedFolder, this.properties.expandAll, node_id));
+        const sample = await this.folderService.getChildNodes(node_id);
+        console.log(sample);
       }
     });
 

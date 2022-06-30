@@ -40,7 +40,7 @@ export class FolderService {
 
             tree_data.push({
                 id: folder.Name,
-                parent: childDataId ? childDataId : '#',
+                parent: '#',
                 text: folder.Name,
                 type: 'folder',
                 state: {
@@ -52,7 +52,7 @@ export class FolderService {
                 childFolders.forEach(childFolder => {
                     tree_data.push(
                         {
-                            id: childDataId ? childDataId : childFolder.UniqueId,
+                            id: childFolder.UniqueId,
                             parent: folder.Name,
                             text: childFolder.Name,
                             type: 'folder',
@@ -80,6 +80,51 @@ export class FolderService {
         }
 
         return tree_data;
+    }
+
+    public async getChildNodes(folderId: string): Promise<ITreeData[]> {
+        const tree_data: ITreeData[] = [];
+        try {
+            const folder = await this.getFolder(folderId);
+            const folderRelativeUrl = folder.ServerRelativeUrl;
+            const childFolders = await this.getChildFolders(folderRelativeUrl);
+            const childFiles = await this.getFilesInsideFolder(folderRelativeUrl);
+
+            if(childFolders.length > 0) {
+                childFolders.forEach(childFolder => {
+                    tree_data.push(
+                        {
+                            id: childFolder.UniqueId,
+                            parent: folderId,
+                            text: childFolder.Name,
+                            type: 'folder',
+                            children: true
+                        }
+                    );
+                });
+            }
+
+            if(childFiles.length > 0) {
+                childFiles.forEach(async file => {
+                    const extension = file.Name.substring(file.Name.lastIndexOf(".") + 1);
+                    tree_data.push({
+                        id: file.UniqueId,
+                        parent: folderId,
+                        text: file.Name,
+                        type: this.setType(extension),
+                        a_attr: {"href": file.LinkingUrl}
+                    });
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        return tree_data;
+    }
+
+    private async getFolder(folderId: string): Promise<IFolder> {
+        const folder = this.sp.web.getFolderById(folderId)();
+        return folder;
     }
 
     private setType(fileExtension: string): string {
