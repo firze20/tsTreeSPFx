@@ -121,7 +121,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
           }
 
         },
-        plugins: ["themes", "types", this.properties.canMove ? 'dnd' : null]
+        plugins: ["themes", "types", this.properties.canMove ? 'dnd' : null, this.properties.canCreate || this.properties.canEdit || this.properties.canDelete ? "contextmenu": null]
       }
   );
 
