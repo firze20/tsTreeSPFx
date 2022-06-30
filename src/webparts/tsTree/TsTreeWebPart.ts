@@ -114,16 +114,10 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
 
   $('#jstree').on('open_node.jstree', (e, data) => {
     data.instance.set_icon(data.node, iconFolderOpen);
-    const node_id = data.node.id;
-
-    if(node_id !== this.properties.selectedFolder.Name) {
-      console.log('I Entered here!');
-    }
   });
 
   $('#jstree').on('close_node.jstree', (e, data) => {
     data.instance.set_icon(data.node, iconFolder);
-    console.log('Fechei!');
   });
 
     //On node click
@@ -132,7 +126,6 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       const node_id = data.node.id;
       const node_type = data.node.type;
       const node_name = data.node.text;
-      console.log(data.node);
       if(!node_url) {
         const shareLink = await this.folderService.getShareLink(node_id);
         window.open(shareLink);
@@ -142,8 +135,9 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       }
       else if(node_type === 'folder' && node_name !== this.properties.selectedFolder.Name) {
         const childData = await this.folderService.getChildNodes(node_id);
-        console.log(childData);
+        //if result length
         if(childData.length > 0) {
+          //because we cant add the entire array we add each object inside the array to the node in question
           childData.forEach(node => {
             if(!$('#jstree').jstree(true).get_node(node.id)) {
               $('#jstree').jstree().create_node(

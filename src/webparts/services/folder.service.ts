@@ -31,7 +31,7 @@ export class FolderService {
         return rootFolder;
     }
 
-    public async getTree(folder: IFolder, expandNodes?: boolean, childDataId?: string): Promise<ITreeData[]> {
+    public async getTree(folder: IFolder, expandNodes?: boolean): Promise<ITreeData[]> {
         const folderRelativeUrl = folder.ServerRelativeUrl;
         const tree_data: ITreeData[] = [];
         try {
@@ -124,6 +124,7 @@ export class FolderService {
         return tree_data;
     }
 
+    //returns a folder based on the id 
     private async getFolder(folderId: string): Promise<IFolder> {
         const folder = this.sp.web.getFolderById(folderId)();
         return folder;
