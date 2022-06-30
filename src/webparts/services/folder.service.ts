@@ -104,7 +104,7 @@ export class FolderService {
     }
 
     //listItemAllFields
-    private async getFolderFields(folderPath: string): Promise<ISPInstance> {
+    public async getFolderFields(folderPath: string): Promise<ISPInstance> {
         const itemFields: ISPInstance = await this.sp.web.getFolderByServerRelativePath(folderPath).listItemAllFields();
         return itemFields;
     }
