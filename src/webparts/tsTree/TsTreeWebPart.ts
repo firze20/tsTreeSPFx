@@ -113,6 +113,11 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
 
   $('#jstree').on('open_node.jstree', (e, data) => {
     data.instance.set_icon(data.node, iconFolderOpen);
+    const node_id = data.node.id;
+
+    if(node_id !== this.properties.selectedFolder.Name) {
+      console.log('I Entered here!');
+    }
   });
 
   $('#jstree').on('close_node.jstree', (e, data) => {
@@ -134,8 +139,16 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
         window.open(node_url);
       }
       else if(node_type === 'folder') {
-        const sample = await this.folderService.getChildNodes(node_id);
-        console.log(sample);
+        const childData = await this.folderService.getChildNodes(node_id);
+        const newNode = {
+          state: "open",
+          data: childData
+        };
+        data.instance.create_node(node_id, newNode, 'last');
+        data.instance.toggle_node(data.node);
+        console.log(data.instance);
+        console.log(childData);
+        console.log(data);
       }
     });
 

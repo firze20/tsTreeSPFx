@@ -27,4 +27,7 @@ interface IState {
     "opened"?: boolean;
     "disabled"?: boolean;
     "selected"?: boolean;
+    "loaded"?: boolean;
+    "loading"?: boolean;
+    "failed"?: boolean;
 }
