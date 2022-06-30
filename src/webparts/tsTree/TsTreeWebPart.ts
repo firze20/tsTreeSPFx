@@ -124,13 +124,17 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
     $('#jstree').on("select_node.jstree", async (e, data) => {
       const node_url = data.node.a_attr.href;
       const node_id = data.node.id;
-      console.log(data.node.type);
+      const node_type = data.node.type;
+      const node_name = data.node.text;
       if(!node_url) {
         const shareLink = await this.folderService.getShareLink(node_id);
         window.open(shareLink);
       }
       else if(node_url !== '#') {
         window.open(node_url);
+      }
+      else if(node_type === 'folder') {
+        $('#jstree').jstree("create_node", node_id, 'inside', await this.folderService.getTree(this.properties.selectedFolder, this.properties.expandAll, node_id));
       }
     });
 

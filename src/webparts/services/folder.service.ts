@@ -31,7 +31,7 @@ export class FolderService {
         return rootFolder;
     }
 
-    public async getTree(folder: IFolder, expandNodes?: boolean): Promise<ITreeData[]> {
+    public async getTree(folder: IFolder, expandNodes?: boolean, childDataId?: string): Promise<ITreeData[]> {
         const folderRelativeUrl = folder.ServerRelativeUrl;
         const tree_data: ITreeData[] = [];
         try {
@@ -40,7 +40,7 @@ export class FolderService {
 
             tree_data.push({
                 id: folder.Name,
-                parent: '#',
+                parent: childDataId ? childDataId : '#',
                 text: folder.Name,
                 type: 'folder',
                 state: {
@@ -52,13 +52,11 @@ export class FolderService {
                 childFolders.forEach(childFolder => {
                     tree_data.push(
                         {
-                            id: childFolder.UniqueId,
+                            id: childDataId ? childDataId : childFolder.UniqueId,
                             parent: folder.Name,
                             text: childFolder.Name,
                             type: 'folder',
-                            children: [
-                                
-                            ]
+                            children: true
                         }
                     );
                 });
