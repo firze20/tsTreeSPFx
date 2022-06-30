@@ -134,6 +134,7 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       const node_id = data.node.id;
       const node_type = data.node.type;
       const node_name = data.node.text;
+      //pdf and some files dont have a sharelink url, annonymous view needs to be generated
       if(!node_url) {
         const shareLink = await this.folderService.getShareLink(node_id);
         window.open(shareLink);
