@@ -25,6 +25,8 @@ const pdfIcon = require('./assets/pdf-svgrepo-com.svg');
 const wordIcon = require('./assets/word-svgrepo-com.svg');
 const excelIcon = require('./assets/excel-svgrepo-com.svg');
 const imageIcon = require('./assets/image-svgrepo-com.svg');
+const aspxIcon = require('./assets/aspx-svgrepo-com.svg');
+const htmlIcon = require('./assets/html-svgrepo-com.svg');
 
 export interface ITsTreeWebPartProps {
   description: string;
@@ -91,6 +93,9 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
           "folder": {
             "icon" : this.properties.expandAll ? iconFolderOpen : iconFolder
           },
+          "aspx": {
+            "icon": aspxIcon
+          },
           "pdf": {
             "icon": pdfIcon
           },
@@ -102,6 +107,9 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
           },
           "image": {
             "icon": imageIcon
+          },
+          "html": {
+            "icon": htmlIcon
           },
           "default" : {
             "icon": defaultIcon

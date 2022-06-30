@@ -134,12 +134,18 @@ export class FolderService {
         switch (fileExtension) {
             case 'docx':
                 return 'word';
+            case 'aspx':
+                return 'aspx';
             case 'doc':
+                return 'word';
+            case 'dotx':
                 return 'word';
             case 'xlsx':
                 return 'excel';
             case 'pdf':
                 return 'pdf';
+            case 'html':
+                return 'html';
             case 'png':
                 return 'image';
             case 'jpg':
