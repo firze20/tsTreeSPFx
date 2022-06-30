@@ -87,7 +87,12 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
         'core' : {
           'data' : await this.folderService.getTree(this.properties.selectedFolder, this.properties.expandAll),
           'async': true,
-          'check_callback': true
+          'check_callback': (operation, node, node_parent, node_position, more) => {
+            if (operation === "move_node") {
+              return node_parent.original.type === "folder"; //only allow dropping inside nodes of type 'folder'
+            }
+            return true;  //allow all other operations
+          }
         },
         types: {
           "folder": {
