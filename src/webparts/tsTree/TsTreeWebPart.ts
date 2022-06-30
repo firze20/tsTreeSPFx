@@ -151,8 +151,6 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
             }, 
             'inside', 
             (result: any) => console.log(result));
-        //$('#jstree).jstree().create_node('a93b5d6d-30d2-41f5-ae46-ff1eaa18b343', 'Exemplo')
-        $('#jstree').jstree().redraw();
         console.log(data);
         console.log(data.node);
       }
