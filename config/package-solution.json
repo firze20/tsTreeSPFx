@@ -3,7 +3,7 @@
   "solution": {
     "name": "JS Tree Plugin Documents",
     "id": "67447b07-d7b9-4523-afd5-6c47eca7a171",
-    "version": "1.0.0.0",
+    "version": "2.0.0.0",
     "iconPath": "images/jstree-ico.png",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,

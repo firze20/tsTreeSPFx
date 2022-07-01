@@ -19,10 +19,10 @@
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Other
     "group": { "default": "Other" },
     "title": { "default": "tsTree" },
-    "description": { "default": "tsTree description" },
-    "officeFabricIconFontName": "Page",
+    "description": { "default": "tsTree is a jquery jstree plugin to display documents and files in a hierarchy tree structure" },
+    "officeFabricIconFontName": "ViewListTree",
     "properties": {
-      "description": "tsTree"
+      "description": "tsTree is a jquery jstree plugin to display documents and files in a hierarchy tree structure"
     }
   }]
 }
