@@ -15,6 +15,7 @@ import { SharingLinkKind } from "@pnp/sp/sharing";
 //import { folderFromServerRelativePath } from "@pnp/sp/folders";
 
 import {ITreeData} from '../../models';
+import { IItemUpdateResult } from "@pnp/sp/items";
 
 export class FolderService {
 
@@ -124,6 +125,19 @@ export class FolderService {
             console.log(error);
         }
         return tree_data;
+    }
+
+    /**
+     * change folder Name method
+     */
+    public async changeName(folderId: string, newFolderName: string): Promise<IItemUpdateResult> {
+         const folder = this.sp.web.getFolderById(folderId);
+         const item = await folder.getItem();
+         const result = await item.update({
+            FileLeafRef: newFolderName
+         });
+
+         return result;
     }
 
     //returns a folder based on the id 
