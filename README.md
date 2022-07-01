@@ -7,9 +7,11 @@ Sharepoint Document/Library/Files View using Jquery and JSTree
 ![alt text](https://www.jstree.com/jstree.png)
 ## Summary
 
-Short summary on functionality and used technologies.
+This client side solution uses Jquery and Jstree, to present a view of a document inside a Sharepoint Site
 
 [picture of the solution in action, if possible]
+
+
 
 ## Used SharePoint Framework Version
 
