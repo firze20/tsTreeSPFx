@@ -139,6 +139,15 @@ export class FolderService {
          return result;
     }
 
+    /**
+     * Delete method
+     */
+    public async delete(folderId: string): Promise<void> {
+        const folder = await this.getFolder(folderId);
+        const folderrName = folder.Name;
+        await this.sp.web.rootFolder.folders.getByUrl(folderrName).delete();
+    }
+
     //returns a folder based on the id 
     private async getFolder(folderId: string): Promise<IFolder> {
         const folder = this.sp.web.getFolderById(folderId)();
