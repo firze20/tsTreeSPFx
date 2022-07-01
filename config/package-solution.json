@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "ts-tree-client-side-solution",
+    "name": "JS Tree Plugin Documents",
     "id": "67447b07-d7b9-4523-afd5-6c47eca7a171",
     "version": "1.0.0.0",
     "includeClientSideAssets": true,
