@@ -136,7 +136,6 @@ export class FolderService {
          const result = await item.update({
             FileLeafRef: newFolderName
          });
-
          return result;
     }
 
