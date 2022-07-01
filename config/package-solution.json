@@ -4,19 +4,20 @@
     "name": "JS Tree Plugin Documents",
     "id": "67447b07-d7b9-4523-afd5-6c47eca7a171",
     "version": "1.0.0.0",
+    "iconPath": "images/jstree.png",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
     "developer": {
-      "name": "",
-      "websiteUrl": "",
+      "name": "Firze20",
+      "websiteUrl": "https://github.com/firze20",
       "privacyUrl": "",
       "termsOfUseUrl": "",
       "mpnId": "Undefined-1.14.0"
     },
     "metadata": {
       "shortDescription": {
-        "default": "ts-tree description"
+        "default": "Sharepoint Folders and Files Jquery JsTree View"
       },
       "longDescription": {
         "default": "ts-tree description"
