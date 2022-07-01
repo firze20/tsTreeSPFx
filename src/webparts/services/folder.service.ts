@@ -154,6 +154,8 @@ export class FolderService {
         return folder;
     }
 
+    
+
     private setType(fileExtension: string): string {
         switch (fileExtension) {
             case 'docx':
