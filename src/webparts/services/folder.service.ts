@@ -211,7 +211,8 @@ export class FolderService {
 
     //get share link for files like PDF types 
     public async getShareLink(fileId: string): Promise<string> {
-        const shareLink = await this.sp.web.getFolderById(fileId).getShareLink(SharingLinkKind.AnonymousView);
+        //ShareLinkKind.AnnonymouseView to Organization
+        const shareLink = await this.sp.web.getFolderById(fileId).getShareLink(SharingLinkKind.OrganizationView);
         return shareLink.sharingLinkInfo.Url;
     }
 }
