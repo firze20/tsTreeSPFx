@@ -216,15 +216,6 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
       }
     });
 
-    //on node rename 
-    /* $('#jstree').jstree("rename_node", (e, data) => {
-      console.log('I entered here');
-      if (data.node.text && data.text != data.old) {
-        console.log('Data old is ', data.old);
-        console.log('Data new is ', data.text);
-      }
-    }); */
-
     if(this.properties.expandAll) {
       $('#jstree').jstree("open_all");
     }
