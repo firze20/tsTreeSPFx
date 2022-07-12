@@ -121,7 +121,58 @@ export default class TsTreeWebPart extends BaseClientSideWebPart<ITsTreeWebPartP
           }
 
         },
-        plugins: ["themes", "types", this.properties.canMove ? 'dnd' : null, this.properties.canCreate || this.properties.canEdit || this.properties.canDelete ? "contextmenu": null]
+        plugins: ["themes", "types", this.properties.canMove ? 'dnd' : null, this.properties.canCreate || this.properties.canEdit || this.properties.canDelete ? "contextmenu": null],
+        contextmenu: {
+          items: (node) => {
+            const tree = $('#jstree').jstree(true);
+            return {
+              "Create": {
+                "separator_before": false,
+                "separator_after": true,
+                "label": "Create",
+                "action": false,
+                "submenu": {
+                    "File": {
+                        "seperator_before": false,
+                        "seperator_after": false,
+                        "label": "File",
+                        action: (obj) => {
+                            node = tree.create_node(node, { text: 'New File', type: 'file'});
+                            tree.deselect_all();
+                            tree.select_node(node);
+                        }
+                    },
+                    "Folder": {
+                        "seperator_before": false,
+                        "seperator_after": false,
+                        "label": "Folder",
+                        action: (obj) => {
+                            node = tree.create_node(node, { text: 'New Folder', type: 'folder' });
+                            tree.deselect_all();
+                            tree.select_node(node);
+                        }
+                    }
+                }
+            },
+            "Rename": {
+                "separator_before": false,
+                "separator_after": false,
+                "label": "Rename",
+                "action": (obj) => {
+                    tree.edit(node);                                    
+                }
+            },
+            "Remove": {
+                "separator_before": false,
+                "separator_after": false,
+                "label": "Remove",
+                "action": (obj) => {
+                    tree.delete_node(node);
+                }
+            }
+            };
+          }
+        }
       }
   );
 
